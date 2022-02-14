@@ -15,8 +15,7 @@ def get_middle(s):
         middle_characters = f'{s[character_position_1]}{s[character_position_2]}'
         return middle_characters
     else:
-        character_position_1 = int(len(s)/2)
-        return s[character_position_1]
+        return s[int(len(s)/2)]
 
 
 # Test Cases
