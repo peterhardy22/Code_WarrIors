@@ -34,11 +34,38 @@
 
 # Function
 def balance(book):
-#     print(book)
+    # Get rid of all characters that are not digits, letters, dots or spaces.  
+    filtered_string: str = filter(lambda x: x not in "!=:;?{},", book)
+    # Turn that filter object into a string.
+    unfiltered_book_list: list = ''.join(filtered_string)
+    # Create a list from the string to store each line of data for calculations.
+    book_list: list = unfiltered_book_list.split('\n')
+    # Create empty list to store data.
+    answer_list: list = []
+    expenses_list: list = []
+    # Add first line of solution to answer_list.
+    answer_list.append(f'Original Balance: {"%.2f" % round(float(book_list[0]), 2)}\r\n')
+    # Create a starting balance to use as a counter for calculations.
+    balance: float = float(book_list[0])
+    # Loop tr=hroguh list excluding the first element being the starting balance, 
+    # and any entries that are empty spaces.
+    for line in book_list[1::]:
+        if line != '':
+            line_list: list = line.split(' ')
+            # Third element in each line is always the price of the item.
+            expenses_list.append(float(line_list[2]))
+            balance: float = balance - float(line_list[2])
+            # Format each line and add in new balance.
+            answer_list.append(f'{line_list[0]} {line_list[1]} {"%.2f" % round(float(line_list[2]), 2)} Balance {"%.2f" % round(balance, 2)}\r\n')
     
-    book_list: list = book.split('\n')
+    # Calculate total expanse.
+    answer_list.append(f'Total expense  {"%.2f" % round(float(book_list[0]) - balance, 2)}\r\n')
     
-    print(f'Original Balance: {book_list[0]}\r\n')
+    # Claculate average expense.
+    average_expense: float = "%.2f" % round((sum(expenses_list)/len(expenses_list)) , 2)
+    answer_list.append(f'Average expense  {average_expense}')
+
+    return ''.join(answer_list)
 
 
 # Test Cases
